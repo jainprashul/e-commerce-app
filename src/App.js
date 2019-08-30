@@ -1,16 +1,18 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import Details from "./components/Details";
 import Cart from "./components/Cart";
 import Default from "./components/PageNotFound/Default";
+import { ProductProvider } from "./context";
+
 
 function App() {
   return (
+    <ProductProvider>
     <Router>
       <React.Fragment>
         <Navbar />
@@ -25,6 +27,8 @@ function App() {
 
       </React.Fragment>
     </Router>
+    </ProductProvider>
+    
   );
 }
 
