@@ -14,7 +14,7 @@ body {
 }
 
 .title-text {
-  font-family: 'Red Hat Text', sans-serif;
+  font-family: 'Red Hat Text', sans-serif !important;
   letter-spacing: 0.3rem;
   text-transform: uppercase;
 }
