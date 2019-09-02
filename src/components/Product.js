@@ -10,9 +10,11 @@ export default class Product extends Component {
     return (
       <ProductWarp className="col-9 mx-auto col-md-6 col-lg-3 my-3">
         <div className="card">
-          <div
+          <ProductConsumer>
+            {(value)=> (
+              <div
             className="img-container p-5"
-            onClick={() => console.log("clicked")}
+            onClick={() => value.handleDetail(id)}
           >
             <Link to="/details">
               <img src={img} alt="product" className="card-img-top" />
@@ -31,7 +33,9 @@ export default class Product extends Component {
                 <i className="fas fa-cart-plus" />
               )}
             </button>
-          </div>
+          </div>) }
+          
+          </ProductConsumer>
           {/* card footer */}
 
           <div className="card-footer d-flex justify-content-between">
