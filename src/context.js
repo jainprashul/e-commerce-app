@@ -10,7 +10,10 @@ class ProductProvider extends Component {
     detailProduct,
     cart: [],
     modelOpen: false,
-    modelProduct: detailProduct
+    modelProduct: detailProduct,
+    cartSubTotal : 0,
+    cartTax : 0,
+    cartTotal : 0,
   };
 
   componentDidMount() {
@@ -44,6 +47,7 @@ class ProductProvider extends Component {
     return product;
   };
 
+  /** Add to Cart by ID Param */
   addToCart = id => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
@@ -75,12 +79,30 @@ class ProductProvider extends Component {
     })
   };
 
-/** Close Model */
+/** Close Model Form */
   closeModel = ()=> {
       this.setState({
           modelOpen: false,
       })
   }
+
+  increment = (id) => {
+    
+  }
+
+  decrement = (id) => {
+    
+  }
+  removeItem = (id) => {
+
+  }
+
+  clearCart = () => {
+    
+  }
+  
+  
+  
 
   render() {
     return (
@@ -91,6 +113,10 @@ class ProductProvider extends Component {
           addToCart: this.addToCart,
           openModel: this.openModel,
           closeModel: this.closeModel,
+          clearCart : this.clearCart,
+          increment: this.increment,
+          decrement : this.decrement,
+          removeItem : this.removeItem,
         }}
       >
         {this.props.children}

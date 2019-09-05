@@ -5,10 +5,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import Navbar from "./components/Navbar";
 import ProductList from "./components/ProductList";
 import Details from "./components/Details";
-import Cart from "./components/Cart";
+import Cart from "./components/Cart/Cart";
 import Default from "./components/PageNotFound/Default";
 import { ProductProvider } from "./context";
 import Model from "./components/Model";
+
+
 
 
 function App() {
