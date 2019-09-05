@@ -8,6 +8,7 @@ import Details from "./components/Details";
 import Cart from "./components/Cart";
 import Default from "./components/PageNotFound/Default";
 import { ProductProvider } from "./context";
+import Model from "./components/Model";
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path='/cart' component={Cart}/>
           <Route component={Default}/>
         </Switch>
-
+        <Model/>
 
       </React.Fragment>
     </Router>
