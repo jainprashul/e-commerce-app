@@ -11,9 +11,9 @@ class ProductProvider extends Component {
     cart: [],
     modelOpen: false,
     modelProduct: detailProduct,
-    cartSubTotal : 0,
-    cartTax : 0,
-    cartTotal : 0,
+    cartSubTotal: 0,
+    cartTax: 0,
+    cartTotal: 0
   };
 
   componentDidMount() {
@@ -64,42 +64,83 @@ class ProductProvider extends Component {
       },
       () => {
         console.log(this.state);
-        this.addTotals()
+        this.addTotals();
       }
     );
   };
 
-/**
- * Opens the Model form
- * @param {id} id
- */
+  /**
+   * Opens the Model form
+   * @param {id} id
+   */
   openModel = id => {
     const product = this.getItem(id);
     this.setState({
-        modelProduct: product,
-        modelOpen: true,
-    })
+      modelProduct: product,
+      modelOpen: true
+    });
   };
 
-/** Close Model Form */
-  closeModel = ()=> {
-      this.setState({
-          modelOpen: false,
-      })
-  }
+  /** Close Model Form */
+  closeModel = () => {
+    this.setState({
+      modelOpen: false
+    });
+  };
 
-  increment = (id) => {
-    
-  }
+  /** Increment Cart Product Item Count
+   * @parmas {id} id  */
+  increment = id => {
+    let tempCart = [...this.state.cart];
+    const selectedProduct = tempCart.find(item => item.id === id);
 
-  decrement = (id) => {
-    
-  }
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+
+    product.count += 1;
+    product.total = product.count * product.price;
+
+    this.setState(
+      {
+        cart: [...tempCart]
+      },
+      () => {
+        this.addTotals();
+      }
+    );
+  };
+
+  /** Decrement Cart Product Item Count
+   * @parmas {id} id
+   */
+  decrement = id => {
+    let tempCart = [...this.state.cart];
+    const selectedProduct = tempCart.find(item => item.id === id);
+
+    const index = tempCart.indexOf(selectedProduct);
+    const product = tempCart[index];
+
+    product.count -= 1;
+    if (product.count === 0) {
+      this.removeItem(id);
+    } else {
+      product.total = product.count * product.price;
+
+      this.setState(
+        {
+          cart: [...tempCart]
+        },
+        () => {
+          this.addTotals();
+        }
+      );
+    }
+  };
 
   /** Remove item from the cart and update cart values
    * @params {id} id
    */
-  removeItem = (id) => {
+  removeItem = id => {
     let tempProducts = [...this.state.products];
     let tempCart = [...this.state.cart];
 
@@ -113,41 +154,43 @@ class ProductProvider extends Component {
     removedProduct.count = 0;
     removedProduct.total = 0;
 
-    this.setState({
-      cart : [...tempCart],
-      products: [...tempProducts],
-    }, ()=> {
-      this.addTotals();
-    })
-  }
+    this.setState(
+      {
+        cart: [...tempCart],
+        products: [...tempProducts]
+      },
+      () => {
+        this.addTotals();
+      }
+    );
+  };
 
   clearCart = () => {
-    this.setState({
-      cart: []
-    },()=> {
-      this.setProducts();
-      this.addTotals();
-    })
-  }
-  
-/** Calculating subtotals , tax & total */
+    this.setState(
+      {
+        cart: []
+      },
+      () => {
+        this.setProducts();
+        this.addTotals();
+      }
+    );
+  };
+
+  /** Calculating subtotals , tax & total */
   addTotals = () => {
-     let subTotal = 0;
-     this.state.cart.map(item => 
-       subTotal += item.total
-     )
-     const tempTax = subTotal * 0.1;
-     const tax = parseFloat(tempTax.toFixed(2));
-     const total = subTotal + tax;
+    let subTotal = 0;
+    this.state.cart.map(item => (subTotal += item.total));
+    const tempTax = subTotal * 0.1;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subTotal + tax;
 
-     this.setState({
-       cartSubTotal : subTotal,
-       cartTax : tax,
-       cartTotal : total,
-     })
-
-  }
-
+    this.setState({
+      cartSubTotal: subTotal,
+      cartTax: tax,
+      cartTotal: total
+    });
+  };
 
   render() {
     return (
@@ -158,10 +201,10 @@ class ProductProvider extends Component {
           addToCart: this.addToCart,
           openModel: this.openModel,
           closeModel: this.closeModel,
-          clearCart : this.clearCart,
+          clearCart: this.clearCart,
           increment: this.increment,
-          decrement : this.decrement,
-          removeItem : this.removeItem,
+          decrement: this.decrement,
+          removeItem: this.removeItem
         }}
       >
         {this.props.children}
