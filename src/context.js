@@ -20,6 +20,7 @@ class ProductProvider extends Component {
     this.setProducts();
   }
 
+  /** Set the copy of the product data , without changing the data in original file. */
   setProducts = () => {
     let tempProducts = [];
     storeProducts.forEach(item => {
@@ -63,6 +64,7 @@ class ProductProvider extends Component {
       },
       () => {
         console.log(this.state);
+        this.addTotals()
       }
     );
   };
@@ -98,11 +100,32 @@ class ProductProvider extends Component {
   }
 
   clearCart = () => {
-    
+    this.setState({
+      cart: []
+    },()=> {
+      this.setProducts();
+      this.addTotals();
+    })
   }
   
-  
-  
+/** Calculating subtotals , tax & total */
+  addTotals = () => {
+     let subTotal = 0;
+     this.state.cart.map(item => 
+       subTotal += item.total
+     )
+     const tempTax = subTotal * 0.1;
+     const tax = parseFloat(tempTax.toFixed(2));
+     const total = subTotal + tax;
+
+     this.setState({
+       cartSubTotal : subTotal,
+       cartTax : tax,
+       cartTotal : total,
+     })
+
+  }
+
 
   render() {
     return (
