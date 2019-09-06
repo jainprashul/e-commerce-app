@@ -95,8 +95,30 @@ class ProductProvider extends Component {
   decrement = (id) => {
     
   }
-  removeItem = (id) => {
 
+  /** Remove item from the cart and update cart values
+   * @params {id} id
+   */
+  removeItem = (id) => {
+    let tempProducts = [...this.state.products];
+    let tempCart = [...this.state.cart];
+
+    // remove from cart
+    tempCart = tempCart.filter(item => item.id !== id);
+
+    // update cart values
+    const index = tempProducts.indexOf(this.getItem(id));
+    let removedProduct = tempProducts[index];
+    removedProduct.inCart = 0;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+
+    this.setState({
+      cart : [...tempCart],
+      products: [...tempProducts],
+    }, ()=> {
+      this.addTotals();
+    })
   }
 
   clearCart = () => {
